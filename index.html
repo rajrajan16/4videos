@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My YouTube Video Grid - Neon Borders</title>
+    <title>My YouTube Video Grid - With Ticker Borders</title>
     <style>
         * {
             margin: 0;
@@ -14,6 +14,7 @@
             height: 1080px;
             overflow: hidden;
             background: black;
+            font-family: 'Arial', sans-serif;
         }
         
         .grid {
@@ -22,67 +23,90 @@
             grid-template-rows: 1fr 1fr;
             width: 100%;
             height: 100%;
-            gap: 10px;
-            padding: 10px;
+            gap: 8px;
+            padding: 8px;
         }
         
         .video-box {
             position: relative;
-            border: 3px solid transparent;
-            border-radius: 10px;
-            background: linear-gradient(black, black) padding-box,
-                        linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ff0000) border-box;
-            animation: borderRotate 4s linear infinite;
+            background: #111;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(255,0,0,0.3);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
         
-        /* Top ticker */
-        .top-ticker {
+        /* Animated scanning border */
+        .video-box::before {
+            content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
-            height: 30px;
-            background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff);
-            overflow: hidden;
-            z-index: 20;
-            display: flex;
-            align-items: center;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff0000, #00ff00, #0000ff, transparent);
+            animation: scan 4s linear infinite;
+            z-index: 10;
         }
         
-        .top-ticker-text {
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px black;
-            white-space: nowrap;
-            animation: tickerTop 10s linear infinite;
-            padding-left: 20px;
-        }
-        
-        /* Bottom ticker */
-        .bottom-ticker {
+        /* Bottom border with text ticker */
+        .video-ticker {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 30px;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.8);
             border-top: 2px solid #ff0000;
+            border-bottom: 2px solid #ff0000;
             overflow: hidden;
             z-index: 20;
         }
         
-        .bottom-ticker-text {
+        .ticker-text {
             position: absolute;
-            color: #ff0000;
-            font-size: 18px;
-            font-weight: bold;
             white-space: nowrap;
-            animation: tickerBottom 12s linear infinite;
+            color: white;
+            font-size: 18px;
             line-height: 30px;
+            animation: ticker 15s linear infinite;
             padding-left: 20px;
+        }
+        
+        /* Corner accents */
+        .corner-accent {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff0000;
+            z-index: 15;
+        }
+        
+        .corner-tl {
+            top: 5px;
+            left: 5px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .corner-tr {
+            top: 5px;
+            right: 5px;
+            border-left: none;
+            border-bottom: none;
+        }
+        
+        .corner-bl {
+            bottom: 35px;
+            left: 5px;
+            border-right: none;
+            border-top: none;
+        }
+        
+        .corner-br {
+            bottom: 35px;
+            right: 5px;
+            border-left: none;
+            border-top: none;
         }
         
         .video-box iframe {
@@ -92,83 +116,103 @@
             pointer-events: none;
         }
         
-        .video-label {
+        /* Video number badge */
+        .video-badge {
             position: absolute;
-            top: 40px;
+            top: 10px;
             left: 10px;
-            background: rgba(0,0,0,0.7);
+            background: #ff0000;
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            border-left: 3px solid #ff0000;
-            z-index: 15;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 30;
+            border: 2px solid white;
+            box-shadow: 0 0 10px rgba(255,0,0,0.5);
         }
         
-        @keyframes borderRotate {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 200%; }
         }
         
-        @keyframes tickerTop {
+        @keyframes ticker {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
         
-        @keyframes tickerBottom {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        /* Glow effect on hover (optional - for preview) */
+        .video-box:hover {
+            box-shadow: 0 0 30px rgba(255,0,0,0.3);
+            transition: box-shadow 0.3s;
         }
     </style>
 </head>
 <body>
     <div class="grid">
-        <!-- Top Left -->
+        <!-- Top Left - Video 1 -->
         <div class="video-box">
-            <div class="top-ticker">
-                <div class="top-ticker-text">🔥 HOT VIDEO • TRENDING NOW • 4K QUALITY • </div>
+            <div class="video-badge">1</div>
+            <div class="corner-accent corner-tl"></div>
+            <div class="corner-accent corner-tr"></div>
+            <div class="corner-accent corner-bl"></div>
+            <div class="corner-accent corner-br"></div>
+            <div class="video-ticker">
+                <div class="ticker-text">🔴 LIVE: Video 1 - Amazing Content • 4K Quality • 60fps • </div>
             </div>
-            <div class="bottom-ticker">
-                <div class="bottom-ticker-text">⚡ VIDEO 1 • 1M VIEWS • NEW UPLOAD • </div>
-            </div>
-            <div class="video-label">#1 Most Watched</div>
-            <iframe src="https://www.youtube.com/embed/33F4Lmr-nKY?autoplay=1&mute=1&loop=1&playlist=33F4Lmr-nKY&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0"></iframe>
+            <iframe 
+                src="https://www.youtube.com/embed/33F4Lmr-nKY?autoplay=1&mute=1&loop=1&playlist=33F4Lmr-nKY&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0">
+            </iframe>
         </div>
         
-        <!-- Top Right -->
+        <!-- Top Right - Video 2 -->
         <div class="video-box">
-            <div class="top-ticker">
-                <div class="top-ticker-text">🎬 POPULAR VIDEO • STAFF PICK • FEATURED • </div>
+            <div class="video-badge">2</div>
+            <div class="corner-accent corner-tl"></div>
+            <div class="corner-accent corner-tr"></div>
+            <div class="corner-accent corner-bl"></div>
+            <div class="corner-accent corner-br"></div>
+            <div class="video-ticker">
+                <div class="ticker-text">🔴 LIVE: Video 2 - Premium Content • High Quality • </div>
             </div>
-            <div class="bottom-ticker">
-                <div class="bottom-ticker-text">⚡ VIDEO 2 • 500K VIEWS • TOP RATED • </div>
-            </div>
-            <div class="video-label">#2 Editor's Choice</div>
-            <iframe src="https://www.youtube.com/embed/rxNWteW32hU?autoplay=1&mute=1&loop=1&playlist=rxNWteW32hU&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0"></iframe>
+            <iframe 
+                src="https://www.youtube.com/embed/rxNWteW32hU?autoplay=1&mute=1&loop=1&playlist=rxNWteW32hU&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0">
+            </iframe>
         </div>
         
-        <!-- Bottom Left -->
+        <!-- Bottom Left - Video 3 -->
         <div class="video-box">
-            <div class="top-ticker">
-                <div class="top-ticker-text">📱 VIRAL VIDEO • MOST SHARED • TRENDING • </div>
+            <div class="video-badge">3</div>
+            <div class="corner-accent corner-tl"></div>
+            <div class="corner-accent corner-tr"></div>
+            <div class="corner-accent corner-bl"></div>
+            <div class="corner-accent corner-br"></div>
+            <div class="video-ticker">
+                <div class="ticker-text">🔴 LIVE: Video 3 - Exclusive Content • Best Moments • </div>
             </div>
-            <div class="bottom-ticker">
-                <div class="bottom-ticker-text">⚡ VIDEO 3 • 2M VIEWS • WEEK's BEST • </div>
-            </div>
-            <div class="video-label">#3 Viral Sensation</div>
-            <iframe src="https://www.youtube.com/embed/7OxE7FwJPJM?autoplay=1&mute=1&loop=1&playlist=7OxE7FwJPJM&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0"></iframe>
+            <iframe 
+                src="https://www.youtube.com/embed/7OxE7FwJPJM?autoplay=1&mute=1&loop=1&playlist=7OxE7FwJPJM&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0">
+            </iframe>
         </div>
         
-        <!-- Bottom Right -->
+        <!-- Bottom Right - Video 4 -->
         <div class="video-box">
-            <div class="top-ticker">
-                <div class="top-ticker-text">🎥 EXCLUSIVE • PREMIERE • MUST WATCH • </div>
+            <div class="video-badge">4</div>
+            <div class="corner-accent corner-tl"></div>
+            <div class="corner-accent corner-tr"></div>
+            <div class="corner-accent corner-bl"></div>
+            <div class="corner-accent corner-br"></div>
+            <div class="video-ticker">
+                <div class="ticker-text">🔴 LIVE: Video 4 - Special Edition • Must Watch • </div>
             </div>
-            <div class="bottom-ticker">
-                <div class="bottom-ticker-text">⚡ VIDEO 4 • NEW RELEASE • FEATURED • </div>
-            </div>
-            <div class="video-label">#4 Just Released</div>
-            <iframe src="https://www.youtube.com/embed/jRxHH56sehc?autoplay=1&mute=1&loop=1&playlist=jRxHH56sehc&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0"></iframe>
+            <iframe 
+                src="https://www.youtube.com/embed/jRxHH56sehc?autoplay=1&mute=1&loop=1&playlist=jRxHH56sehc&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0">
+            </iframe>
         </div>
     </div>
 </body>
