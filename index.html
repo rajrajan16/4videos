@@ -1,37 +1,123 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My YouTube Video Grid</title>
+    <title>My YouTube Video Grid - Neon Borders</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
             width: 1920px;
             height: 1080px;
             overflow: hidden;
             background: black;
         }
+        
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             width: 100%;
             height: 100%;
-            gap: 2px;
+            gap: 10px;
+            padding: 10px;
         }
+        
         .video-box {
-            width: 100%;
-            height: 100%;
+            position: relative;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            background: linear-gradient(black, black) padding-box,
+                        linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ff0000) border-box;
+            animation: borderRotate 4s linear infinite;
             overflow: hidden;
+            box-shadow: 0 0 20px rgba(255,0,0,0.3);
         }
+        
+        /* Top ticker */
+        .top-ticker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff);
+            overflow: hidden;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+        }
+        
+        .top-ticker-text {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px black;
+            white-space: nowrap;
+            animation: tickerTop 10s linear infinite;
+            padding-left: 20px;
+        }
+        
+        /* Bottom ticker */
+        .bottom-ticker {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: rgba(0,0,0,0.9);
+            border-top: 2px solid #ff0000;
+            overflow: hidden;
+            z-index: 20;
+        }
+        
+        .bottom-ticker-text {
+            position: absolute;
+            color: #ff0000;
+            font-size: 18px;
+            font-weight: bold;
+            white-space: nowrap;
+            animation: tickerBottom 12s linear infinite;
+            line-height: 30px;
+            padding-left: 20px;
+        }
+        
         .video-box iframe {
             width: 100%;
             height: 100%;
             border: none;
             pointer-events: none;
+        }
+        
+        .video-label {
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            border-left: 3px solid #ff0000;
+            z-index: 15;
+        }
+        
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        @keyframes tickerTop {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        @keyframes tickerBottom {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
     </style>
 </head>
@@ -39,18 +125,49 @@
     <div class="grid">
         <!-- Top Left -->
         <div class="video-box">
+            <div class="top-ticker">
+                <div class="top-ticker-text">🔥 HOT VIDEO • TRENDING NOW • 4K QUALITY • </div>
+            </div>
+            <div class="bottom-ticker">
+                <div class="bottom-ticker-text">⚡ VIDEO 1 • 1M VIEWS • NEW UPLOAD • </div>
+            </div>
+            <div class="video-label">#1 Most Watched</div>
             <iframe src="https://www.youtube.com/embed/33F4Lmr-nKY?autoplay=1&mute=1&loop=1&playlist=33F4Lmr-nKY&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0"></iframe>
         </div>
+        
         <!-- Top Right -->
         <div class="video-box">
+            <div class="top-ticker">
+                <div class="top-ticker-text">🎬 POPULAR VIDEO • STAFF PICK • FEATURED • </div>
+            </div>
+            <div class="bottom-ticker">
+                <div class="bottom-ticker-text">⚡ VIDEO 2 • 500K VIEWS • TOP RATED • </div>
+            </div>
+            <div class="video-label">#2 Editor's Choice</div>
             <iframe src="https://www.youtube.com/embed/rxNWteW32hU?autoplay=1&mute=1&loop=1&playlist=rxNWteW32hU&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0"></iframe>
         </div>
+        
         <!-- Bottom Left -->
         <div class="video-box">
+            <div class="top-ticker">
+                <div class="top-ticker-text">📱 VIRAL VIDEO • MOST SHARED • TRENDING • </div>
+            </div>
+            <div class="bottom-ticker">
+                <div class="bottom-ticker-text">⚡ VIDEO 3 • 2M VIEWS • WEEK's BEST • </div>
+            </div>
+            <div class="video-label">#3 Viral Sensation</div>
             <iframe src="https://www.youtube.com/embed/7OxE7FwJPJM?autoplay=1&mute=1&loop=1&playlist=7OxE7FwJPJM&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0"></iframe>
         </div>
+        
         <!-- Bottom Right -->
         <div class="video-box">
+            <div class="top-ticker">
+                <div class="top-ticker-text">🎥 EXCLUSIVE • PREMIERE • MUST WATCH • </div>
+            </div>
+            <div class="bottom-ticker">
+                <div class="bottom-ticker-text">⚡ VIDEO 4 • NEW RELEASE • FEATURED • </div>
+            </div>
+            <div class="video-label">#4 Just Released</div>
             <iframe src="https://www.youtube.com/embed/jRxHH56sehc?autoplay=1&mute=1&loop=1&playlist=jRxHH56sehc&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0"></iframe>
         </div>
     </div>
