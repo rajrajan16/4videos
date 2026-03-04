@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My YouTube Video Grid - 720p</title>
+    <title>My YouTube Video Grid - 1080p Display / 720p Videos</title>
     <style>
         * {
             margin: 0;
@@ -10,8 +10,8 @@
         }
         
         body {
-            width: 1280px;  /* 720p width */
-            height: 720px;   /* 720p height */
+            width: 1920px;  /* 1080p width */
+            height: 1080px;  /* 1080p height */
             overflow: hidden;
             background: black;
             font-family: 'Arial', sans-serif;
@@ -23,20 +23,41 @@
             grid-template-rows: 1fr 1fr;
             width: 100%;
             height: 100%;
-            gap: 4px;
-            padding: 4px;
+            gap: 8px;
+            padding: 8px;
         }
         
         .video-box {
             position: relative;
             background: #111;
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 0 15px rgba(255,0,0,0.2);
+            box-shadow: 0 0 20px rgba(255,0,0,0.3);
             border: 2px solid #ff0000;
         }
         
-        /* Animated corner borders */
+        /* Container to maintain 720p aspect ratio */
+        .video-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+        
+        /* Force YouTube iframe to 720p equivalent size */
+        .video-container iframe {
+            width: 1280px;  /* 720p width */
+            height: 720px;   /* 720p height */
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border: none;
+            pointer-events: none;
+        }
+        
+        /* Animated border effect */
         .video-box::before {
             content: '';
             position: absolute;
@@ -45,120 +66,113 @@
             right: -2px;
             bottom: -2px;
             border: 2px solid transparent;
-            border-radius: 8px;
-            background: linear-gradient(90deg, #ff0000, #ff4444, #ff0000) border-box;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #ff0000, #ff6666, #ff0000) border-box;
             -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: destination-out;
             mask-composite: exclude;
-            animation: borderGlow 2s linear infinite;
+            animation: borderGlow 2s ease-in-out infinite;
             z-index: 5;
         }
         
-        /* Bottom ticker - adjusted for 720p */
+        /* Bottom ticker */
         .video-ticker {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 24px;  /* Smaller for 720p */
+            height: 32px;
             background: rgba(0,0,0,0.85);
             border-top: 2px solid #ff0000;
             overflow: hidden;
-            z-index: 20;
-            backdrop-filter: blur(2px);
+            z-index: 30;
+            backdrop-filter: blur(3px);
         }
         
         .ticker-text {
             position: absolute;
             white-space: nowrap;
             color: white;
-            font-size: 14px;  /* Adjusted for 720p */
-            line-height: 24px;
-            animation: ticker 12s linear infinite;
-            padding-left: 15px;
-            text-shadow: 1px 1px 2px black;
+            font-size: 18px;
+            line-height: 32px;
+            animation: ticker 15s linear infinite;
+            padding-left: 20px;
+            text-shadow: 2px 2px 2px black;
             font-weight: bold;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
         
-        /* Top badge - adjusted for 720p */
+        /* Video badge */
         .video-badge {
             position: absolute;
-            top: 5px;
-            left: 5px;
+            top: 10px;
+            left: 10px;
             background: #ff0000;
             color: white;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 12px;
-            z-index: 30;
-            border: 1px solid white;
-            box-shadow: 0 0 8px rgba(255,0,0,0.5);
+            font-size: 16px;
+            z-index: 40;
+            border: 2px solid white;
+            box-shadow: 0 0 15px rgba(255,0,0,0.7);
         }
         
-        /* Title overlay - adjusted for 720p */
-        .video-title {
+        /* Quality badge - shows 720p */
+        .quality-badge {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(0,0,0,0.7);
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
             color: #ff0000;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
             font-weight: bold;
-            z-index: 30;
+            z-index: 40;
             border: 1px solid #ff0000;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            backdrop-filter: blur(2px);
         }
         
-        .video-box iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            pointer-events: none;
-        }
-        
-        /* Corner accents - adjusted for 720p */
+        /* Corner accents */
         .corner {
             position: absolute;
-            width: 15px;
-            height: 15px;
-            border: 2px solid #ff0000;
-            z-index: 25;
-            filter: drop-shadow(0 0 3px #ff0000);
+            width: 25px;
+            height: 25px;
+            border: 3px solid #ff0000;
+            z-index: 35;
+            filter: drop-shadow(0 0 5px #ff0000);
         }
         
         .corner-tl {
-            top: 2px;
-            left: 2px;
+            top: 5px;
+            left: 5px;
             border-right: none;
             border-bottom: none;
         }
         
         .corner-tr {
-            top: 2px;
-            right: 2px;
+            top: 5px;
+            right: 5px;
             border-left: none;
             border-bottom: none;
         }
         
         .corner-bl {
-            bottom: 26px;
-            left: 2px;
+            bottom: 37px;
+            left: 5px;
             border-right: none;
             border-top: none;
         }
         
         .corner-br {
-            bottom: 26px;
-            right: 2px;
+            bottom: 37px;
+            right: 5px;
             border-left: none;
             border-top: none;
         }
@@ -169,22 +183,37 @@
         }
         
         @keyframes borderGlow {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            0% { opacity: 0.6; filter: hue-rotate(0deg); }
+            50% { opacity: 1; filter: hue-rotate(10deg); }
+            100% { opacity: 0.6; filter: hue-rotate(0deg); }
         }
         
-        /* Add a subtle overlay to make text more readable */
-        .video-box::after {
-            content: '';
+        /* Video title overlay */
+        .video-title {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 95%, rgba(255,0,0,0.1) 100%);
-            pointer-events: none;
-            z-index: 10;
+            bottom: 40px;
+            left: 10px;
+            color: white;
+            font-size: 14px;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 8px;
+            border-radius: 4px;
+            z-index: 25;
+            border-left: 2px solid #ff0000;
+        }
+        
+        /* Resolution indicator */
+        .res-indicator {
+            position: absolute;
+            bottom: 40px;
+            right: 10px;
+            color: #ff0000;
+            font-size: 12px;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 8px;
+            border-radius: 4px;
+            z-index: 25;
+            border: 1px solid #ff0000;
         }
     </style>
 </head>
@@ -193,69 +222,85 @@
         <!-- Top Left - Video 1 -->
         <div class="video-box">
             <div class="video-badge">1</div>
-            <div class="video-title">FEATURED</div>
+            <div class="quality-badge">720p</div>
             <div class="corner corner-tl"></div>
             <div class="corner corner-tr"></div>
             <div class="corner corner-bl"></div>
             <div class="corner corner-br"></div>
+            <div class="video-title">Featured Video</div>
+            <div class="res-indicator">HD</div>
             <div class="video-ticker">
-                <div class="ticker-text">🔴 NOW PLAYING: Video 1 • 4K QUALITY • 60FPS • TRENDING • </div>
+                <div class="ticker-text">🔴 NOW PLAYING: Video 1 • 720p HD QUALITY • 60FPS • TRENDING NOW • </div>
             </div>
-            <iframe 
-                src="https://www.youtube.com/embed/33F4Lmr-nKY?autoplay=1&mute=1&loop=1&playlist=33F4Lmr-nKY&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0&playsinline=1&vq=hd720"
-                allow="autoplay; encrypted-media">
-            </iframe>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/33F4Lmr-nKY?autoplay=1&mute=1&loop=1&playlist=33F4Lmr-nKY&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0&playsinline=1&vq=hd720"
+                    allow="autoplay; encrypted-media">
+                </iframe>
+            </div>
         </div>
         
         <!-- Top Right - Video 2 -->
         <div class="video-box">
             <div class="video-badge">2</div>
-            <div class="video-title">POPULAR</div>
+            <div class="quality-badge">720p</div>
             <div class="corner corner-tl"></div>
             <div class="corner corner-tr"></div>
             <div class="corner corner-bl"></div>
             <div class="corner corner-br"></div>
+            <div class="video-title">Popular Video</div>
+            <div class="res-indicator">HD</div>
             <div class="video-ticker">
-                <div class="ticker-text">🔴 NOW PLAYING: Video 2 • TOP RATED • 1M+ VIEWS • </div>
+                <div class="ticker-text">🔴 NOW PLAYING: Video 2 • 720p HD • TOP RATED • 1M+ VIEWS • </div>
             </div>
-            <iframe 
-                src="https://www.youtube.com/embed/rxNWteW32hU?autoplay=1&mute=1&loop=1&playlist=rxNWteW32hU&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0&playsinline=1&vq=hd720"
-                allow="autoplay; encrypted-media">
-            </iframe>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/rxNWteW32hU?autoplay=1&mute=1&loop=1&playlist=rxNWteW32hU&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0&playsinline=1&vq=hd720"
+                    allow="autoplay; encrypted-media">
+                </iframe>
+            </div>
         </div>
         
         <!-- Bottom Left - Video 3 -->
         <div class="video-box">
             <div class="video-badge">3</div>
-            <div class="video-title">VIRAL</div>
+            <div class="quality-badge">720p</div>
             <div class="corner corner-tl"></div>
             <div class="corner corner-tr"></div>
             <div class="corner corner-bl"></div>
             <div class="corner corner-br"></div>
+            <div class="video-title">Viral Video</div>
+            <div class="res-indicator">HD</div>
             <div class="video-ticker">
-                <div class="ticker-text">🔴 NOW PLAYING: Video 3 • MOST SHARED • HOT • </div>
+                <div class="ticker-text">🔴 NOW PLAYING: Video 3 • 720p HD • MOST SHARED • HOT • </div>
             </div>
-            <iframe 
-                src="https://www.youtube.com/embed/7OxE7FwJPJM?autoplay=1&mute=1&loop=1&playlist=7OxE7FwJPJM&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0&playsinline=1&vq=hd720"
-                allow="autoplay; encrypted-media">
-            </iframe>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/7OxE7FwJPJM?autoplay=1&mute=1&loop=1&playlist=7OxE7FwJPJM&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0&playsinline=1&vq=hd720"
+                    allow="autoplay; encrypted-media">
+                </iframe>
+            </div>
         </div>
         
         <!-- Bottom Right - Video 4 -->
         <div class="video-box">
             <div class="video-badge">4</div>
-            <div class="video-title">NEW</div>
+            <div class="quality-badge">720p</div>
             <div class="corner corner-tl"></div>
             <div class="corner corner-tr"></div>
             <div class="corner corner-bl"></div>
             <div class="corner corner-br"></div>
+            <div class="video-title">New Video</div>
+            <div class="res-indicator">HD</div>
             <div class="video-ticker">
-                <div class="ticker-text">🔴 NOW PLAYING: Video 4 • JUST ADDED • EXCLUSIVE • </div>
+                <div class="ticker-text">🔴 NOW PLAYING: Video 4 • 720p HD • JUST ADDED • EXCLUSIVE • </div>
             </div>
-            <iframe 
-                src="https://www.youtube.com/embed/jRxHH56sehc?autoplay=1&mute=1&loop=1&playlist=jRxHH56sehc&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0&playsinline=1&vq=hd720"
-                allow="autoplay; encrypted-media">
-            </iframe>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/jRxHH56sehc?autoplay=1&mute=1&loop=1&playlist=jRxHH56sehc&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&rel=0&playsinline=1&vq=hd720"
+                    allow="autoplay; encrypted-media">
+                </iframe>
+            </div>
         </div>
     </div>
 </body>
